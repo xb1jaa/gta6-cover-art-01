@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vice Cover Studio — GTA 6-style cover art maker</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<main class="app">
+  <section class="controls" aria-label="Cover controls">
+    <h1>VICE COVER STUDIO</h1>
+    <p class="tagline">Your photo + a caption, made into GTA-style cover art. Everything stays on your machine — photos are never uploaded.</p>
+
+    <h2>Layout</h2>
+    <div id="layouts" class="choices"></div>
+
+    <h2>Colour grade</h2>
+    <div id="grades" class="choices"></div>
+
+    <h2>Export size</h2>
+    <div id="sizes" class="choices"></div>
+
+    <h2>Caption</h2>
+    <label>Title
+      <input id="title" type="text" maxlength="24" value="VICE CITY">
+    </label>
+    <label>Subtitle
+      <input id="subtitle" type="text" maxlength="40" value="Sunset Heist">
+    </label>
+    <div id="caption-styles" class="choices"></div>
+    <label>Caption position
+      <select id="caption-pos">
+        <option value="bottom" selected>Bottom</option>
+        <option value="top">Top</option>
+      </select>
+    </label>
+
+    <h2>Poster extras</h2>
+    <label class="check"><input id="extra-sun" type="checkbox" checked> Outrun sun</label>
+    <label class="check"><input id="extra-skyline" type="checkbox" checked> City skyline</label>
+    <label class="check"><input id="extra-palms" type="checkbox" checked> Palm silhouettes</label>
+    <label class="check"><input id="extra-halftone" type="checkbox" checked> Halftone dots</label>
+
+    <h2>Panels</h2>
+    <p class="hint">Click a panel on the cover to select it, then drag it to position the photo, or scroll over it to zoom.</p>
+    <div id="panels" class="panel-row">
+      <button type="button" class="panel-btn">Panel 1</button>
+      <button type="button" class="panel-btn">Panel 2</button>
+      <button type="button" class="panel-btn">Panel 3</button>
+      <button type="button" class="panel-btn">Panel 4</button>
+    </div>
+    <label>Photo for selected panel
+      <input id="panel-photo" type="file" accept="image/*">
+    </label>
+    <div class="sample-row">
+      <span>Or try a sample:</span>
+      <button type="button" data-sample="pier">Pier</button>
+      <button type="button" data-sample="boulevard">Boulevard</button>
+    </div>
+    <button id="fill-all" type="button" class="secondary">Fill every panel with this photo</button>
+    <label>Zoom <span id="zoom-val">100%</span>
+      <input id="zoom" type="range" min="1" max="3" step="0.05" value="1">
+    </label>
+    <label>Pan left / right
+      <input id="pan-x" type="range" min="-0.5" max="0.5" step="0.01" value="0">
+    </label>
+    <label>Pan up / down
+      <input id="pan-y" type="range" min="-0.5" max="0.5" step="0.01" value="0">
+    </label>
+
+    <button id="export" type="button" class="primary">Export PNG</button>
+    <p id="status" role="status"></p>
+    <p class="fineprint">Original art made in your browser. No Rockstar Games logo, artwork or font is used.</p>
+  </section>
+  <section class="preview" aria-label="Cover preview">
+    <canvas id="cover" width="1920" height="1080"></canvas>
+  </section>
+</main>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
