@@ -1,28 +1,21 @@
-// Fixed scenes for screenshots: ?shot=editor shows the page with sample photos
-// loaded; ?shot=cover shows the exported cover alone, full-bleed.
-// `photo` picks the sample for the hero panel, `photo2` the second panel,
-// `caption` the title, `sub` the subtitle, `layout`, `grade`, `size`,
-// `captionStyle` and `captionPos` the rest. window.__shotReady is set once painted.
-export async function runShot(shot, query, load) {
-  if (shot === 'cover') document.body.classList.add('shot-cover');
-  const photos = [
-    query.get('photo') ?? 'pier',
-    query.get('photo2') ?? 'boulevard',
-    query.get('photo3') ?? 'pier',
-    query.get('photo4') ?? 'boulevard',
-  ];
-  await load({
-    layout: query.get('layout') ?? 'hero',
-    grade: query.get('grade') ?? 'sunset',
-    size: query.get('size') ?? 'wide',
-    caption: query.get('caption') ?? 'VICE CITY',
-    sub: query.get('sub') ?? 'Sunset Heist',
-    captionStyle: query.get('captionStyle') ?? 'sunset',
-    captionPos: query.get('captionPos') ?? 'bottom',
-    photos,
-    zooms: [1.05, 1.1, 1, 1.05],
-    oxs: [0, 0.05, 0, -0.05],
-    oys: [0, 0, 0.05, 0],
-  });
-  requestAnimationFrame(() => requestAnimationFrame(() => { window.__shotReady = true; }));
+// Shot mode for screenshots: reads the page's query string and tells main.js
+// what to show. ?shot=cover draws one exported cover full-frame; ?shot=editor
+// shows the editor with a sample photo loaded. Any other page is the plain app.
+export function readShot() {
+  const q = new URLSearchParams(window.location.search);
+  const shot = q.get('shot');
+  if (shot !== 'cover' && shot !== 'editor') return null;
+  const size = q.get('size') || 'square';
+  const dims = { square: [1080, 1080], portrait: [1080, 1350], wide: [1920, 1080] }[size] || [1080, 1080];
+  return {
+    shot,
+    photo: q.get('photo') || 'boulevard',
+    caption: q.get('caption') || 'Sunset Heist',
+    sub: q.get('sub') || 'Leonida Nights',
+    layout: q.get('layout') || 'hero',
+    grade: q.get('grade') || 'sunset',
+    lettering: q.get('lettering') || 'block',
+    w: Number(q.get('w') || dims[0]),
+    h: Number(q.get('h') || dims[1]),
+  };
 }

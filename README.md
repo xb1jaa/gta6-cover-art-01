@@ -1,63 +1,44 @@
-# Vice Cover Studio
-
 [![make.fun](https://make.fun/badge/gta6-cover-art-01.svg)](https://make.fun/bounty/gta6-cover-art-01)
 [![rank](https://make.fun/badge/gta6-cover-art-01/xb1jaa/gta6-cover-art-01/rank.svg)](https://make.fun/bounty/gta6-cover-art-01/leaderboard)
-[![reward](https://make.fun/badge/gta6-cover-art-01/xb1jaa/gta6-cover-art-01/reward.svg)](https://make.fun/bounty/gta6-cover-art-01)
+[![reward](https://make.fun/badge/gta6-cover-art-01/xb1jaa/gta6-cover-art-01/reward.svg)](https://make.fun/bounty/gta6-cover-art-01/leaderboard)
 
-An entry for the [make.fun](https://make.fun) bounty [Make GTA 6 Cover Art](https://make.fun/bounty/gta6-cover-art-01).
+# Vice Cover Studio
 
-A web app that turns a person's photo and a caption into cover art in the style
-of GTA 6's posters — the multi-panel poster look, bold caption lettering and a
-Vice City sunset or neon colour grade — and exports it as a PNG to share.
+An offline web app that turns a photo and a caption into GTA 6-style cover art — the multi-panel poster look with bold caption lettering and a Vice City sunset or neon colour grade — exported as a PNG to share.
+
+Built for the [Make GTA 6 Cover Art](https://make.fun/bounty/gta6-cover-art-01) bounty on [make.fun](https://make.fun).
 
 ## What it does
 
-- **Multi-panel covers** — four layouts (Hero + two, Four squares, Three
-  strips, One photo), each panel filled with the person's own photo or several
-  photos, or one photo across every panel.
-- **Any photo** — load photos from the machine, then crop and position each
-  panel by dragging on the cover, scrolling to zoom, or with the zoom/pan
-  sliders. Two sample photos ship with the app so it works with no upload.
-- **Caption** — editable title and subtitle, three lettering styles
-  (Sunset gradient, Neon pink, Chrome white), top or bottom placement.
-- **Colour grades** — Vice Sunset, Neon Night, Palm Dusk, Golden Hour, laid
-  over every panel with a vignette.
-- **Poster extras** — an outrun sun, a city skyline, palm silhouettes and
-  halftone dots, each toggleable.
-- **Fast export** — one click exports a PNG in 1080 × 1080, 1080 × 1350 or
-  1920 × 1080.
+- **Any photo**: load your own photos from your machine, one per panel, or fill several panels with one photo. Nothing is uploaded — everything runs in your browser.
+- **Crop and position**: pick a panel, drag its photo to move it, scroll to zoom it.
+- **Four layouts**: Hero + 3, Four Square, Full Bleed, and Tilted Stack.
+- **Four colour grades**: Vice Sunset, Neon Nights, Gold Hour, Midnight.
+- **Three letterings**: Block, Neon Script, Stencil.
+- **Export PNG** in the common post sizes: 1080 × 1080, 1080 × 1350, and 1920 × 1080.
 
-## Run it
+## Try it
 
-The app is plain static files under `app/` — no build step, no network
-request. Serve it with any static server and open `app/index.html` in desktop
-Chrome:
+Serve `app/` with any static file server and open `app/index.html` in a desktop browser:
 
 ```sh
-python3 -m http.server 8080 --directory app
-# open http://localhost:8080
+cd app && python3 -m http.server 8080
 ```
 
-Everything runs offline in the browser; photos never leave the machine.
+Then open http://localhost:8080. A sample photo is loaded to start; swap in your own, pick a layout and a grade, write your caption, and export.
 
-## Files
+## How it works
 
-- `app/index.html`, `app/style.css` — the editor page.
-- `app/src/cover.js` — the cover engine: panel layouts, colour grades,
-  poster decorations and caption lettering, all drawn on canvas.
-- `app/src/main.js` — the editor wiring: uploads, drag-to-crop, export.
-- `app/src/shots.js` — fixed scenes for screenshots (`?shot=cover`,
-  `?shot=editor`).
-- `app/samples/` — two sample photos, made for make.fun with an image model
-  and free to use.
-- `main.ts` — the entry program: copies `app/` and `screenshots/` to
-  `/output` and writes `dossier.json` with the vendored make.fun library.
-- `screenshots/` — the app with a photo loaded, and covers it exported.
+- `app/index.html` + `app/style.css` — the editor (dark Vice theme).
+- `app/src/cover.js` — the cover renderer: panel layouts, cover-fit photo placement with pan/zoom, gradient colour grades, halftone dots, vignette, and the title band, all drawn on canvas.
+- `app/src/main.js` — editor wiring: photo inputs, drag/wheel controls, caption, export.
+- `app/src/shots.js` — shot mode for screenshots (`?shot=cover` draws one exported cover full-frame; `?shot=editor` shows the editor with a sample photo).
+- `app/samples/` — two sample photos made with an image model for make.fun, free to use.
+- `main.ts` — the entry program (Node 22): copies `app/` and `screenshots/` to `/output` and writes `dossier.json` with the kit's `vendor/makefun-app.ts`.
 
 ## Originality
 
-All art in this entry is original and drawn in code. No Rockstar Games logo,
-official artwork, character or font is used.
+Everything here is our own design. No Rockstar Games logo, wordmark, official artwork, character, or font is used. Lettering uses system fonts only.
 
 ## License
 
